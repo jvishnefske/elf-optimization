@@ -43,3 +43,14 @@ BOOST_AUTO_TEST_CASE(conversion){
     std::cout<<relTime<<std::endl;
     BOOST_CHECK(relTime == 0);
 }
+
+BOOST_AUTO_TEST_CASE(conversion_to_string){
+    time_t relTime = strToRel("2014 1 1 0 0");
+    char stime[255];
+    relToStr(relTime,stime,254);
+    
+    boost::test_tools::output_test_stream output;
+    output << stime;
+    BOOST_CHECK(output.is_equal("2014 1 1 0 0"));
+}
+

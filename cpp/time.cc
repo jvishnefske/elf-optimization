@@ -24,7 +24,7 @@
     while (in>>line);
 }
 */
-const char* timeFormat = "%Y %m %d %H %M";
+const char* timeFormat = "%Y %-m %-d %-H %-M";
 time_t globalStart(){
     static struct std::tm tm_globalStart ; 
         strptime("2014 1 1 0 0",timeFormat,&tm_globalStart);
@@ -33,6 +33,7 @@ time_t globalStart(){
 }
 time_t strToRel(const char* sdate){
     // why does strptime give a time_t 54 days off  when not static????
+    //
     static struct std::tm tm_date; 
     strptime(sdate,timeFormat,&tm_date);
     time_t t_date = mktime(&tm_date);    
@@ -56,7 +57,8 @@ void relToStr(int relTime,char *out,int maxLen){
     time_t gStart = globalStart();
     time_t time = gStart+(time_t)relTime;
     struct std::tm tm_time;
-    gmtime_r(&time,&tm_time);
+    localtime_r(&time,&tm_time);
+    //gmtime_r(&time,&tm_time);
     strftime(out,maxLen,timeFormat,&tm_time);    
 }
 
