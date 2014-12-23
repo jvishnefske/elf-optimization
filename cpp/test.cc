@@ -1,9 +1,12 @@
 #include <iostream>
 #include <ctime>
+#define  BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MODULE Elf
 //Boost Test Library Unit Test Framework [UTF].
-#include <boost/test/included/unit_test.hpp>//static library
+//#include <boost/test/included/unit_test.hpp>//static library is slow to compile
 //http://www.boost.org/doc/libs/1_44_0/libs/test/doc/html/utf/testing-tools/output-test.html
 #include <boost/test/output_test_stream.hpp>
+#include <boost/test/unit_test.hpp>
 //#include <boost/test/included/prg_exec_monitor.hpp>//static library, calls cpp_main() 
 //#include <stdexcept>
 extern int strToRel(const char*);
@@ -29,7 +32,7 @@ BOOST_AUTO_TEST_CASE(test){
     time_t _globalStart = (time_t) globalStart();
     //also consider asctime(gmtime());
     time = ctime(&_globalStart);
-
+    BOOST_CHECK(_globalStart==1388563200);
     boost::test_tools::output_test_stream output;
     output<<time;
     BOOST_CHECK(!output.is_empty(false));
@@ -39,9 +42,10 @@ BOOST_AUTO_TEST_CASE(conversion){
     time_t _globalStart = (time_t) globalStart();
     time_t relTime = strToRel("2014 1 1 0 0");
     time_t sumTime = _globalStart + relTime;
-    std::cout << relTime <<", " <<_globalStart << " converts to: " << ctime(&relTime) << std::endl;
-    std::cout<<relTime<<std::endl;
+    //std::cout << relTime <<", " <<_globalStart << " converts to: " << ctime(&relTime) << std::endl;
+    //std::cout<<relTime<<std::endl;
     BOOST_CHECK(relTime == 0);
+    BOOST_CHECK(sumTime == 1388563200);
 }
 
 BOOST_AUTO_TEST_CASE(conversion_to_string){

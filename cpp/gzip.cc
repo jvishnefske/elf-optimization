@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 #include <ctime>
+#include <sstream> //stringstream
 //#define FILENAME  "../toys_rev2.csv.gz";
 #define FILENAME "./toys.csv"
 /* std::vector<std::unique_ptr<Toy>>& readInput(){
@@ -34,5 +35,17 @@ void read(){
     while (file>>line){
         std::cout<<"["<<i<<"]"<<line<<std::endl;
         i++;
+    }
+}
+std::vector<std::unique_ptr<Toy>> readToys(std::istream &stream){
+    std::string line;
+    std::getline(stream,line);//read header line.
+    std::vector<std::unique_ptr<Toy>> toyBox;
+    while(std::getline(stream,line){
+        std::stringstream lineStream(line);
+        std::string cell;
+        std::getline(lineStream),cell);
+            
+        }
     }
 }

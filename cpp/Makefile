@@ -1,5 +1,5 @@
-CC=clang++
-CFLAGS=-Wall -std=c++11 -g -c
+CC=g++
+CFLAGS=-Wall -std=c++11  -c
 LDFLAGS=-lz
 SOURCES=main.cc gzip.cc time.cc
 OBJECTS=$(SOURCES:.cc=.o)
@@ -14,6 +14,6 @@ $(EXECUTABLE): $(OBJECTS)
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
 test: test.o $(TESTOBJECTS)
-	$(CC) $(LDFLAGS) $(TESTOBJECTS) -o test 
+	$(CC) $(LDFLAGS) -lboost_unit_test_framework $(TESTOBJECTS) -o test 
 clean:
 	rm -f *.o test elf

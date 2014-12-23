@@ -32,7 +32,7 @@ time_t globalStart(){
     return t_globalStart;
 }
 time_t strToRel(const char* sdate){
-    // why does strptime give a time_t 54 days off  when not static????
+    // why does strptime give a time_t 54 days off  when struct tm not static????
     //
     static struct std::tm tm_date; 
     strptime(sdate,timeFormat,&tm_date);
@@ -52,7 +52,8 @@ time_t strToRel(const char* sdate){
 
 
 }
-void relToStr(int relTime,char *out,int maxLen){
+
+char* relToStr(int relTime,char *out,int maxLen){
     
     time_t gStart = globalStart();
     time_t time = gStart+(time_t)relTime;
