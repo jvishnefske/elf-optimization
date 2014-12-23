@@ -1,4 +1,4 @@
-CC=g++
+CC=clang++
 CFLAGS=-Wall -std=c++11 -g -c
 LDFLAGS=-lz
 SOURCES=main.cc gzip.cc time.cc
@@ -14,6 +14,6 @@ $(EXECUTABLE): $(OBJECTS)
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
 test: test.o $(TESTOBJECTS)
-	$(CC) $(LDFLAGS) $(TESTOBJECTS) -o test && ./test
+	$(CC) $(LDFLAGS) $(TESTOBJECTS) -o test 
 clean:
 	rm -f *.o test elf

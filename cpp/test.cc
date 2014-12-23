@@ -36,7 +36,10 @@ BOOST_AUTO_TEST_CASE(test){
     BOOST_CHECK(output.is_equal("Wed Jan  1 00:00:00 2014\n"));
 }   
 BOOST_AUTO_TEST_CASE(conversion){
-    int relTime = strToRel("2014 1 1 0 0");
+    time_t _globalStart = (time_t) globalStart();
+    time_t relTime = strToRel("2014 1 1 0 0");
+    time_t sumTime = _globalStart + relTime;
+    std::cout << relTime <<", " <<_globalStart << " converts to: " << ctime(&relTime) << std::endl;
     std::cout<<relTime<<std::endl;
     BOOST_CHECK(relTime == 0);
 }
