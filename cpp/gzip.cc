@@ -37,7 +37,8 @@ void read(){
         i++;
     }
 }
-std::vector<std::unique_ptr<Toy>> readToys(std::istream &stream){
+std::vector<std::shared_ptr<Toy>> readToys(std::istream &stream){
+    std::ifstream file(FILENAME)
     std::string line;
     std::getline(stream,line);//read header line.
     std::vector<std::unique_ptr<Toy>> toyBox;

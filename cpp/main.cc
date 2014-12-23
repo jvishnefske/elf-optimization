@@ -12,8 +12,8 @@ int main(int argc, char *argv[])
     std::string token;
     std::getline(lineStream,token,',');
     std::getline(lineStream,token,',');
-    toy.arrivalTime = strToRel(token);
+    toy.arrivalTime = strToRel(token.c_str());
     lineStream >> toy.duration;
-    std::cout<<toy.toString()std::endl;
+    std::cout << toy.toString() << std::endl;
     return 0;
 }

@@ -1,0 +1,10 @@
+*.zip
+*.csv
+*~
+*.gz
+.ipynb_checkpoints
+*.swp
+elf
+test
+tags
+*.o
