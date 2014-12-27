@@ -7,6 +7,8 @@
 time_t strToRel(const char*);
 char *relToStr(int,char*,int);
 struct Toy{
+    Toy(){}
+    Toy(int _id,int _time, int _duration):id(_id),arrivalTime(_time),duration(_duration){}
     int id;
     int arrivalTime;
     int duration;
@@ -18,5 +20,4 @@ struct Toy{
             "\"duration:\"" << duration <<"\"}";
         //return unique_ptr<std::string>(oss.str());
         return oss.str();
-    }
-};
+    }};

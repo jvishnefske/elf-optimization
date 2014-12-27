@@ -1,0 +1,13 @@
+CXX=clang++
+# CC compiler is used for implicit conversion from .o to executable
+CC=clang++
+LDFLAGS=-lz -lboost_iostreams
+CXXFLAGS=--std=c++11 -Wall 
+all:#assign struct timeExample
+timeExample:
+struct:
+multimap:multimap.o
+assign:
+toybox:../time.o
+clean:
+	rm *.o

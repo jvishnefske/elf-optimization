@@ -27,12 +27,12 @@ int init_unit_test_suite(int argc, char *argv[]){
     //std::cout<<"running tests. " << std::endl;
     return 0;
 }
-BOOST_AUTO_TEST_CASE(test){
+BOOST_AUTO_TEST_CASE(globalStartTime){
     char *time;
     time_t _globalStart = (time_t) globalStart();
     //also consider asctime(gmtime());
     time = ctime(&_globalStart);
-    BOOST_CHECK(_globalStart==1388563200);
+    BOOST_CHECK_EQUAL(_globalStart, 1388563200);
     boost::test_tools::output_test_stream output;
     output<<time;
     BOOST_CHECK(!output.is_empty(false));
@@ -44,8 +44,8 @@ BOOST_AUTO_TEST_CASE(conversion){
     time_t sumTime = _globalStart + relTime;
     //std::cout << relTime <<", " <<_globalStart << " converts to: " << ctime(&relTime) << std::endl;
     //std::cout<<relTime<<std::endl;
-    BOOST_CHECK(relTime == 0);
-    BOOST_CHECK(sumTime == 1388563200);
+    BOOST_CHECK_EQUAL(relTime, 0);
+    BOOST_CHECK_EQUAL(sumTime, 1388563200);
 }
 
 BOOST_AUTO_TEST_CASE(conversion_to_string){

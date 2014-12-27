@@ -1,18 +1,20 @@
-CC=g++
-CFLAGS=-Wall -std=c++11  -c
+CC=clang++
+CXX=clang++
+CXXFLAGS=-Wall -std=c++11  
 LDFLAGS=-lz
-SOURCES=main.cc gzip.cc time.cc
+SOURCES=main.cc time.cc readcsv.cc
 OBJECTS=$(SOURCES:.cc=.o)
 TESTFILES=time.cc test.cc
 TESTOBJECTS=$(TESTFILES:.cc=.o)
 EXECUTABLE=elf
-all: $(SOURCES) $(EXECUTABLE)
-	
+#
+all: $(SOURCES) $(EXECUTABLE) 
+#	
 $(EXECUTABLE): $(OBJECTS) 
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
-
-.cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+#
+#.cc.o:
+#	$(CC) $(CPPFLAGS)  $< -o $@
 test: test.o $(TESTOBJECTS)
 	$(CC) $(LDFLAGS) -lboost_unit_test_framework $(TESTOBJECTS) -o test 
 clean:
