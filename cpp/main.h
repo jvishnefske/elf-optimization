@@ -3,7 +3,11 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <vector>
+
 //#include <zlib.h>
+#ifndef MAIN_H
+#define MAIN_H
 time_t strToRel(const char*);
 char *relToStr(int,char*,int);
 struct Toy{
@@ -21,3 +25,6 @@ struct Toy{
         //return unique_ptr<std::string>(oss.str());
         return oss.str();
     }};
+typedef std::vector<std::unique_ptr<Toy> > Toybox;
+void showToyStats(Toybox&);
+#endif //MAIN_H

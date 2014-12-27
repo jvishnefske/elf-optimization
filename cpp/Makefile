@@ -1,8 +1,8 @@
 CC=clang++
 CXX=clang++
 CXXFLAGS=-Wall -std=c++11  
-LDFLAGS=-lz
-SOURCES=main.cc time.cc readcsv.cc
+LDFLAGS=-lz -lboost_iostreams
+SOURCES=main.cc time.cc readcsv.cc stats.cc
 OBJECTS=$(SOURCES:.cc=.o)
 TESTFILES=time.cc test.cc
 TESTOBJECTS=$(TESTFILES:.cc=.o)

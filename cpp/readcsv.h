@@ -1,5 +1,8 @@
 //readcsv.h
-std::vector<std::unique_ptr<Toy> > readcsvz(std::string );
-std::vector<std::unique_ptr<Toy> > readToys(std::string);
+#include <vector>
+#include <memory>
+#include "main.h" //Toy
+Toybox readcsvz(std::string );
+Toybox readToys(std::string);
 
 
