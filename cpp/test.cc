@@ -9,10 +9,10 @@
 #include <boost/test/unit_test.hpp>
 //#include <boost/test/included/prg_exec_monitor.hpp>//static library, calls cpp_main() 
 //#include <stdexcept>
-extern int strToRel(const char*);
-extern void relToStr(int, char*, int);
+//extern int strToRel(const char*);
+//extern void relToStr(int, char*, int);
 extern int globalStart(void);
-
+#include "main.h"
 //BOOST_AUTO_TEST_CASE(FUNCTION);
 //BOOST_AUTO_TEST_SUITE(SUITE_NAME);
 //libunit_test_framework.lib should only be required to be linked 
@@ -25,6 +25,7 @@ extern int globalStart(void);
 
 int init_unit_test_suite(int argc, char *argv[]){
     //std::cout<<"running tests. " << std::endl;
+    if(false){std::cout<<argv[argc-1];}
     return 0;
 }
 BOOST_AUTO_TEST_CASE(globalStartTime){

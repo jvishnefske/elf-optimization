@@ -53,7 +53,7 @@ time_t strToRel(const char* sdate){
 
 }
 
-char* relToStr(int relTime,char *out,int maxLen){
+void relToStr(int relTime,char *out,int maxLen){
     
     time_t gStart = globalStart();
     time_t time = gStart+(time_t)relTime;

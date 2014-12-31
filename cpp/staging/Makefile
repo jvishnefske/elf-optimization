@@ -3,8 +3,11 @@ CXX=clang++
 CC=clang++
 LDFLAGS=-lz -lboost_iostreams
 CXXFLAGS=--std=c++11 -Wall 
-all:#assign struct timeExample
+all:math #assign struct timeExample 
 timeExample:
+threads:
+math:
+	$CXX $LDFLAGS math.o ../readcsv.o -o container
 struct:
 multimap:multimap.o
 assign:

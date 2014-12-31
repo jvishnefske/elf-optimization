@@ -5,12 +5,22 @@
 #include "readcsv.h"
 #include <string>
 
+//  #include <boost/lockfree/queue.hpp>
+// #include <boost/lockfree/stack.hpp>
+// #include <boost/lockfree/spsc_queue.hpp>//ringbuffer
 //main.cc
 
 
 
 int main(int argc, char *argv[])
 {
+    // boost::thread_group tgroup;
+    // tgroup.create_thread(function);
+    // boost::this_thread::sleep(delay);
+    // tgroup.create_thread(boost::bind(&isingetr::perform, &teaponSinger))
+    // tgroup.join_all();
+    // boost::bind(f,_1,_2)(x,y);
+    
     //for another example of getopt int cpp see:
     // http://www.chemie.fu-berlin.de/chemnet/use/info/libgpp/libgpp_39.html
     //std::string inputFile = "../toys_rev2.csv";
