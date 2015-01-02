@@ -2,80 +2,77 @@
 #include <algorithm>//max, sort,
 #include <memory>
 #include "main.h"
+#include "time.h" //Chronos
+#include <cmath> //pow
 
-#define minuteIsNormal(x) ((x%1440)>=(9*60)&&(x%1440)<=(19*60))?true:false
-#define DIV_CEIL(x,y) (int)((x/(float)(y))  -.00001 )+1
-/* defined in main.h:
-struct ElfState {
-    public:
-        ElfState(int _elfId):elfId(_elfId), efficiency(1),lastCompleted(0),nextStartTime(0){}
-    int elfId;
-    float efficiency;
-    int lastCompleted; //toyid
-    // the time the next task may consider.
-    int nextStartTime; 
-};*/
+//#define IS_SANCTIONED_TIME(x) ((x%1440)>=(9*60)&&(x%1440)<(19*60))?true:false
+
+
 // we could expand this concept to one of a polymorphic heuristic which stores
 // an arbitraty object, and comparison function.
-/*template <class T, class Comparison Functor>
-class HeuristicContainer: std::vector<T 
-   //allow selecting elves according to a given heuristic.
-    // the heuristic is provided by a comparison function such as comparing by the duration.
-    // This allows sorting by the comparison metric, and binary search returnign an iterator.
-    private:
-        std::vector<Elf> heuristic
-
-    public:
-}*/
+// template <class T, class Comparison Functor>
+// class HeuristicContainer: std::vector<T 
+// allow selecting elves according to a given heuristic.
+// the heuristic is provided by a comparison function such as comparing by the duration.
+// This allows sorting by the comparison metric, and binary search returning an iterator.
+  
 
 //return error status, and possibly updated state.
 //std::pair<int,ElfState> 
-bool updateState(const ElfState &priorState,Toy &toy,ElfState &nextState){
-    int newStartTime = priorState.nextStartTime;
-    int validMinCount=0;
-    int invalidMinCount=0;
-    float efficiency=priorState.efficiency;
-    int endTime = newStartTime+efficiency*toy.duration;
-    //durration counts from length to 0, 
-    //marker tracks the current real time in minutes, we have counted to.
-    float durrationCountDown = toy.duration;
-    int minuteMarker = newStartTime;
-    while(durrationCountDown>0){
-         if (minuteIsNormal(minuteMarker)){
-            //minutes to end of workday times effeciency
-            int minutesToEndOfWorkday=(1900*60-(minuteMarker%1440));
-            if(durrationCountDown>minutesToEndOfWorkday*efficiency){
-                //we round down when converting from realtime to job minutes
-                int workdayTaskTime=minutesToEndOfWorkday*efficiency; 
-                validMinCount += workdayTaskTime;
-                durrationCountDown -= workdayTaskTime;
-            
-            }else{
-                //this is the last section of durrationCountDown
-                //remember to divide and round up
-                //since the integer division operation typically returns both 
-                //  ceil(x/y)=(x+y-1)/y
-                int dayMinutes = ((int)durrationCountDown/priorState.efficiency)+DurrationCounter;
-            }
-         }else{
-            int minutesToStartOfWorkday=(9*60-minuteMarker)%1440;
-            if (durrationCountDown>DurrationCounter){
-            
-            }
-            invalidMinCount+=minutesToStartOfWorkday;
 
-         }
-    }
-    if (toy.arrivalTime > newStartTime) 
-        newStartTime = toy.arrivalTime;
-    if (!timeIsNormal(priorState.lastCompleted)){
-        int Penalty=
-    }
-    //we need to check if the startTime is within allowed hours.
-    //also possibly check if it would be more efficient to start the task next morning
-    //and leave a small gap at the end of a day.
+    bool updateState(const ElfState &priorState,const Toy &toy,ElfState &nextState){
+        Chronos &chronos = Chronos::getChronos();
+        //const int invalidHoursPerDay = 14;
+        //const int validHoursPerDay = 10;
+        int startTime = priorState.nextStartTime;
+        //int fullDays = DIV_CEIL(toy.duration, priorState.efficiency) / 1440;
+        int endTime = startTime + 
+            DIV_CEIL(toy.duration, priorState.efficiency);
+        //count valid hours, and assume remainint is overTime.
+        float sanctionedHours,unsanctionedHours;
+        /*if (chronos.isSanctonedTime(endTime)){
+            unsanctionedHours = fullDays * insanctionedHoursPerDay * priorState.efficiency  ;
+            validHours = toy.duration /60  - overtimeHours;
+        }else{
+            
+            validHours = (float)fullDays * validHoursPerDay* priorState.efficiency +
+                (19*60-startTime % 1440)/60.0 * priorState.efficiency; // time in first shift.
+            overtimeHours = toy.duration/60. - validHours;
+        }*/
+        chronos.getSanctionedBreakDown(priorState.nextStartTime, toy.duration, priorState.efficiency,
+                                     sanctionedHours, unsanctionedHours);
+        nextState.toyId = toy.id;
+        
+        chronos.nextStartTime(endTime, priorState.efficiency , unsanctionedHours, nextState.nextStartTime );
+
+        nextState.efficiency = priorState.efficiency *
+            std::pow(1.02,sanctionedHours) *
+            std::pow(0.9,unsanctionedHours);
     
-    int DurrationCounter=
-    efficencyCoeficient = 1.0
-   return std::pair<int,ElfState>(true,newState);
-}
+        //enforce efficency envelopes
+        if (nextState.efficiency > 4.0){
+            nextState.efficiency = 4;
+        }else if (nextState.efficiency<.25){
+            nextState.efficiency = .25;
+        }
+        
+        
+        return true;
+
+
+/*
+
+        int penalty = DIV_CEIL(unsanctionedHours*60,priorState.efficiency);
+        int penaltyDays = penalty / 600;
+        int penaltyMinutes = penalty % 600;
+        std::cout<<"efficiency "<< priorState.efficiency<<" penalty "<<penaltyMinutes
+            <<" overtime: "<<unsanctionedHours<<" days "<<fullDays<<std::endl;
+        if (chronos.isSanctonedTime(endTime)){
+            nextState.nextStartTime = endTime + penaltyDays * 1440 + penaltyMinutes; 
+        } else {
+            int tomorrowMorning = ((int)(endTime+14*60)/1440)*1440 + 9*60;
+            nextState.nextStartTime = tomorrowMorning + penaltyDays * 1440 + penaltyMinutes; 
+        }*/
+
+        
+    }

@@ -19,7 +19,7 @@
 #include <iostream>
 
 class Expression{};
-class binaryOperator:{
+class binaryOperator{
     public: 
         virtual void operate(Expression,Expression);        
-}
+};

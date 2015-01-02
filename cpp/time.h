@@ -127,7 +127,7 @@ class Chronos
   	
   	//now calculate penalty, and add.
   	nextStartTime = nextSanctionedTime(startMinute);
-  	int penalty = DIV_CEIL(unsanctionedHours*60, efficency);
+  	int penalty = 0;//DIV_CEIL(unsanctionedHours*60, efficency);
   	int penaltyMinutes = penalty % minutesPerWorkday;
   	int penaltyDays = penalty / minutesPerWorkday;
   	nextStartTime += penaltyDays * minutesIn24h + penaltyMinutes;

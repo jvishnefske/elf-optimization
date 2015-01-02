@@ -1,5 +1,5 @@
 #include "readcsv.h"
-#include "time.h" //strToRel, relToStr
+#include "time.h" //Chronos
 #include "main.h" //struct Toy
 
 #include <iostream>
@@ -20,6 +20,7 @@
 
 std::vector<std::unique_ptr<Toy> > readToys(std::istream &file)
 {
+    Chronos & chronos = Chronos::getChronos();
     //std::wcslen
     std::string line;
     std::string token;
@@ -41,7 +42,7 @@ std::vector<std::unique_ptr<Toy> > readToys(std::istream &file)
         std::getline(stream,token,',');
         std::getline(stream,token,',');
 
-        toy->arrivalTime = strToRel(token.c_str());
+        toy->arrivalTime = chronos.convertToMinutes(token);
         stream >> toy->duration;
 
         toybox.push_back(std::move(toy));

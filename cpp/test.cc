@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE(update_state){
     //multiday durration toy
     state1.efficiency = 4;
     state1.nextStartTime =  1981; //9:01 day 2
-    toy.duration = 1440*8;
+    toy.duration = 1440*8; 
     updateState(state1,toy,state2);
     //next efficency = 4*.9**(14*2)*1.02**(20.)
     BOOST_CHECK_CLOSE(state2.efficiency, 0.3110668209953771, .00001); 
